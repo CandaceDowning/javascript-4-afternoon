@@ -24,13 +24,14 @@ function outer() {
   
 // Code Here
 
+var inner = new outer()
 
 
 //Once you do that, invoke inner.
 
 //Code Here
 
-
+inner()
 
 ////////// PROBLEM 2 //////////
 
@@ -53,7 +54,8 @@ function callFriend(name) {
 
 //Code Here
 
-
+var callJake = new callFriend('Jake')
+callJake('435-555-9248')
 
 ////////// PROBLEM 3 //////////
 
@@ -63,14 +65,20 @@ function callFriend(name) {
 
 //Code Here
 
+function makeCounter(){
+  var counter = 0;
+  return function counting(){
+    counter++
+    return counter
+  }
+}
 
-
-//Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+// Uncomment this once you make your function
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -85,19 +93,25 @@ function callFriend(name) {
   http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
 */
 
-function counterFactory(value) {
-  // Code here.
-
+function counterFactory(number) {
+  var count = number
   return {
-
+    inc: function(){
+      count++
+      return count
+    },
+    dec:function(){
+      count--
+      return count
+    }
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 
@@ -111,11 +125,12 @@ counter = counterFactory(10);
 
 function motivation( firstname, lastname ) {
   var welcomeText = "You're doing awesome, keep it up";
-
-  // code message function here.
-
+  function message(){
+    return welcomeText + " " + firstname + " " + lastname + "."
+    }
+    
   //Uncommment this to return the value of your message function
-  //return message;
+  return message;
 }
 
 var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
@@ -143,10 +158,13 @@ var module = (function() {
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
-    // Code here.
+    publicMethod: function(){
+      return privateMethod()
+    }
   };
 })();
 
+module.publicMethod()
 
 
 ////////// PROBLEM 7 //////////
@@ -162,7 +180,14 @@ function secretNumber() {
   var secret = 143;
 
   return {
-    // Code here
+    addToSecret: function(aNum){
+      secret+=aNum
+      return secret
+    },
+    takeAwayFromSecret:function(num){
+      secret-=num
+      return secret
+    }
   };
 }
 
@@ -185,12 +210,33 @@ function secretNumber() {
   
   Fix the code below to log the desired output.
 */
-
 function timeOutCounter() {
+  
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000);
-  }
+    timer(i)
+    }
+  function timer(i){
+      setTimeout(
+        function() {
+        console.log(i);
+        }, i * 1000);
+    }
 }
+
+
+
 timeOutCounter();
+
+
+//for each loop add the value of i to an empty variable
+//next function will take in the variable and return it
+
+
+// function timeOutCounter() {
+
+//   for (var i = 0; i <= 5; i++) {
+//     setTimeout(function() {
+//       console.log(i);
+//     }, i * 1000);
+//   }
+// }
